@@ -1,0 +1,25 @@
+
+int f(int i,int j,int n,vector<vector<int>>&triangle,vector<vector<int>>&dp)
+{
+     if(i==n-1) return triangle[i][j];
+     
+    if(dp[i][j]!=-1) return dp[i][j];
+    
+     int path1=triangle[i][j]+f(i+1,j,n,triangle,dp);
+     int path2=triangle[i][j]+f(i+1,j+1,n,triangle,dp);
+    
+    dp[i][j]= min(path1,path2);
+    
+    return dp[i][j];
+    
+}
+
+int minimumPathSum(vector<vector<int>>& triangle, int n){
+      // Write your code here.
+      vector<vector<int>>dp(n,vector<int>(n,-1));
+      int ans=f(0,0,n,triangle,dp);
+    
+      return ans;
+    
+    
+}
