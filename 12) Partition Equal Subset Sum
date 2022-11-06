@@ -1,0 +1,45 @@
+bool f(int index,int target,vector<int>&arr,vector<vector<int>>&dp)
+{
+    // base cases
+    
+    if(target==0) return true;
+    if(index==0) return (arr[index]==target);
+    
+    if(dp[index][target]!=-1) return dp[index][target];
+    
+    // not take
+    
+    bool not_take=f(index-1,target,arr,dp);
+    
+    bool take=false;
+    
+    if(arr[index]<=target)
+    {
+        take=f(index-1,target-arr[index],arr,dp);
+    }
+    
+    
+    dp[index][target]=(take or not_take);
+    
+    return dp[index][target];
+    
+}
+
+bool canPartition(vector<int> &arr, int n)
+{
+	// Write your code here.
+    
+    int sum=0;
+    
+    for(auto it:arr) sum+=it;
+    
+    if(sum%2!=0) return false;
+    
+    int m=sum/2;
+    
+    vector<vector<int>>dp(n,vector<int>(m+1,-1));
+    
+    bool ans=f(n-1,sum/2,arr,dp);
+    
+    return ans;
+}
