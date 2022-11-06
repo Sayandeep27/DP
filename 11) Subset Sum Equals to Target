@@ -1,0 +1,34 @@
+
+bool f(int i,int target,vector<int>&arr,vector<vector<int>>&dp)
+{
+    if(target==0) return true;
+    
+    if(i==0) return arr[i]==target;
+    
+    if(dp[i][target]!=-1) return dp[i][target];
+    
+    // nottake 
+    bool nottake=f(i-1,target,arr,dp);
+    
+    bool take=false;
+    
+    if(arr[i]<=target)
+    {
+        take=f(i-1,target-arr[i],arr,dp);
+    }
+    
+    dp[i][target]=(take or nottake);
+    
+    return dp[i][target];
+    
+}
+
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    // Write your code here.
+    
+    vector<vector<int>>dp(n,vector<int>(k+1,-1));
+    
+    bool ans=f(n-1,k,arr,dp);
+    
+    return ans;
+}
