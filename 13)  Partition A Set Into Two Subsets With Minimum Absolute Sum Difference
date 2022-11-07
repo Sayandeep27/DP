@@ -1,0 +1,36 @@
+
+int f(int i,int curr,int sum,vector<int>&arr,vector<vector<int>>&dp)
+{
+    
+    // base case
+    if(i==0) return abs(sum-2*curr);
+    
+    if(dp[i][curr]!=-1) return dp[i][curr];
+    
+    // take
+    int take=f(i-1,curr+arr[i],sum,arr,dp);
+    
+    // not take
+    int not_take=f(i-1,curr,sum,arr,dp);
+    
+    return dp[i][curr]= min(take,not_take);
+    
+    
+}
+
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+	// Write your code here.
+    
+    
+    
+    int sum=0;
+    sum=accumulate(arr.begin(),arr.end(),sum);
+    int curr=0;
+    
+    vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+    
+    int ans=f(n-1,curr,sum,arr,dp);
+    
+    return ans;
+}
