@@ -1,0 +1,37 @@
+
+int f(int i,int target,vector<int>&nums,vector<vector<int>>&dp)
+{
+    // base cases
+    if(target<0) return 0;
+    
+    if(i==-1)
+    {
+        if(target==0) return 1;
+        else return 0;
+    }
+    
+    if(dp[i][target]!=-1) return dp[i][target];
+    
+    
+    // take
+    int take=f(i-1,target-nums[i],nums,dp);
+    
+    // not take
+    int not_take=f(i-1,target,nums,dp);
+    
+    dp[i][target] =take+not_take;
+    
+    return dp[i][target];
+}
+
+int findWays(vector<int> &nums, int target)
+{
+    // Write your code here.
+    int n=nums.size();
+    
+    vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+    
+    int ans=f(n-1,target,nums,dp);
+    
+    return ans;
+}
