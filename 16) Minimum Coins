@@ -3,7 +3,7 @@
 int f(int i,int target,vector<int>&num,vector<vector<int>>&dp)
 {
     // base case
-    if(target==0) return 0;
+   
     if(i==0)
     {
         if(target%num[0]==0)
