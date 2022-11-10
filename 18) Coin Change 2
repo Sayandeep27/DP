@@ -1,0 +1,45 @@
+
+long f(int i,int value,int *arr,vector<vector<long>>&dp)
+{
+    // base cases
+    
+    if(i==0)
+    {
+        if(value%arr[i]==0) return 1;
+        
+        return 0;
+        
+    }
+    
+    
+    if(dp[i][value]!=-1) return dp[i][value];
+    
+    // not_take
+    long not_take=f(i-1,value,arr,dp);
+    
+    // take
+    long take=0;
+    
+    if(arr[i]<=value)
+    {
+        take=f(i,value-arr[i],arr,dp);
+    }
+    
+    
+    return dp[i][value]=(take+not_take);
+    
+    
+}
+
+
+
+long countWaysToMakeChange(int *arr, int n, int value)
+{
+    //Write your code here
+    
+    vector<vector<long>>dp(n+1,vector<long>(value+1,-1));
+    
+    long ans=f(n-1,value,arr,dp);
+    
+    return ans;
+}
