@@ -1,0 +1,44 @@
+#include <bits/stdc++.h> 
+
+int f(int i,vector<int>&weights,vector<int>&value,int n,int maxw,vector<vector<int>>&dp)
+{
+    
+    // base cases
+    if(i==0)
+    {
+        if(weights[0]<=maxw)
+        {
+            return value[i];
+        }
+        return 0;
+    }
+    
+    if(dp[i][maxw]!=-1) return dp[i][maxw];
+    
+    // not take
+    
+    int not_take=0+f(i-1,weights,value,n,maxw,dp);
+    
+    // take
+    int take=INT_MIN;
+    
+    if(weights[i]<=maxw)
+    {
+        take=value[i]+f(i-1,weights,value,n,maxw-weights[i],dp);
+    }
+    
+    return dp[i][maxw]=max(take,not_take);
+    
+}
+
+
+int knapsack(vector<int> weight, vector<int> value, int n, int maxw) 
+{
+	// Write your code here
+  //  int N=1e7+1;
+    vector<vector<int>>dp(n+1,vector<int>(maxw+1,-1));
+    
+    int ans=f(n-1,weight,value,n,maxw,dp);
+    
+    return ans;
+}
