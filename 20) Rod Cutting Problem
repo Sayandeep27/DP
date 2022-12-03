@@ -1,0 +1,47 @@
+
+int f(int index,int n,vector<int>&price,vector<vector<int>>&dp)
+{
+    
+    // base case
+    
+    if(index==0)
+    { 
+        return (n/(index+1))* price[0];  // means (n/1)*price[0] 
+    }
+    
+    
+    if(dp[index][n]!=-1) return dp[index][n];
+    
+    
+    // nnot take
+    
+    int not_take=0+f(index-1,n,price,dp);
+    
+    
+    // take
+    
+    int take=INT_MIN;
+    int rodlength=index+1;
+    
+    if(rodlength<=n)
+    {
+        take=price[index]+f(index,n-rodlength,price,dp);
+    }
+    
+    return  dp[index][n]= max(take,not_take);
+    
+    
+}
+
+
+int cutRod(vector<int> &price, int n)
+{
+      // Write your code here.
+    
+    vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+      
+      int ans=f(n-1,n,price,dp);
+     
+       return ans;
+    
+}
