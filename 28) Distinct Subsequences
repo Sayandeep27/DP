@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+
+int prime=1e9+7;
+
+
+int f(int i,int j,string &t,string &s,vector<vector<int>>&dp)
+{
+    // base cases
+    
+    if(j<0) return 1;
+    
+    if(i<0) return 0;
+    
+    
+    if(dp[i][j]!=-1) return dp[i][j];
+    
+    if(t[i]==s[j])
+    {
+        int leaveone=f(i-1,j-1,t,s,dp);
+        int stay=f(i-1,j,t,s,dp);
+        
+        return dp[i][j]=(leaveone+stay)%prime;
+    }
+    
+    
+    return dp[i][j]=f(i-1,j,t,s,dp);
+    
+}
+
+
+
+int subsequenceCounting(string &t, string &s, int lt, int ls) {
+    // Write your code here.
+    int n=lt;
+    int m=ls;
+    
+    vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+    
+    int ans=f(n-1,m-1,t,s,dp);
+    
+    return ans;
+    
+} 
