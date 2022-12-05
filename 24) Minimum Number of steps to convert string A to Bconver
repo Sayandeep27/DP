@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+
+
+int f(int i,int j,string &str,string &ptr,vector<vector<int>>&dp)
+{   
+    
+    // base case
+    
+    if(i<0 or j<0) return 0;
+    
+    
+    if(dp[i][j]!=-1) return dp[i][j];
+    
+    if(str[i]==ptr[j])
+    {
+        return dp[i][j]= 1+f(i-1,j-1,str,ptr,dp);
+    }
+    
+    return dp[i][j]= 0+max(f(i-1,j,str,ptr,dp),f(i,j-1,str,ptr,dp));
+    
+    
+}
+
+
+int canYouMake(string &str, string &ptr)
+{
+    // Write your code here.
+    
+    int n=str.size();
+    int m=ptr.size();
+    
+    vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+    
+    int ans=f(n-1,m-1,str,ptr,dp);
+    
+    return n+m-2*ans;
+}
