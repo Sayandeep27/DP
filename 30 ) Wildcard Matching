@@ -1,0 +1,63 @@
+
+#include<bits/stdc++.h>
+
+bool isAllStars(string &s1,int i)
+{
+    for(int j=0;j<=i;j++)
+    {
+        if(s1[j]!='*') return false;
+    }
+    
+    return true;
+}
+
+int f(int i,int j,string &s1,string &s2,vector<vector<int>>&dp)
+{
+    if(i<0 and j<0) return true;
+    
+    if(i<0 and j>=0) return false;
+    
+    if(i>=0 and j<0)
+    {
+        return isAllStars(s1,i);
+    }
+    
+    if(dp[i][j]!=-1) return dp[i][j];
+    
+    
+    if(s1[i]==s2[j] or s1[i]=='?')
+    {
+        return dp[i][j]= f(i-1,j-1,s1,s2,dp);
+    }
+    else
+    {
+        if(s1[i]=='*')
+        {
+            return dp[i][j]=(f(i-1,j,s1,s2,dp) or f(i,j-1,s1,s2,dp) );
+        }
+        else
+        {
+            return false;
+        }
+           
+    }
+    
+    
+}
+
+
+
+bool wildcardMatching(string s1, string s2)
+{
+   // Write your code here.
+    
+   int n=s1.size();
+   int m=s2.size();
+    
+    vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+    
+   bool ans=f(n-1,m-1,s1,s2,dp);
+    
+   return ans; 
+    
+}
