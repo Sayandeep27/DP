@@ -1,0 +1,72 @@
+class Solution {
+public:
+
+
+    int f(int i,int buy,vector<int>&prices,vector<vector<long>>dp)
+    {
+         int n=prices.size();
+         
+         // base case
+         if(i==n)
+         {
+             return 0;
+         }
+
+         if(dp[i][buy]!=-1) return dp[i][buy];
+
+
+
+        if(buy==1) 
+        {
+           // take
+            int take=-prices[i]+f(i+1,0,prices,dp);
+
+
+           // not take
+           int not_take=0+f(i+1,1,prices,dp);
+
+           return dp[i][buy]=max(take,not_take);
+
+
+        }
+        else
+        {
+
+            // take
+            int take=prices[i]+f(i+1,1,prices,dp);
+
+
+            // not take
+            int not_take=0+f(i+1,0,prices,dp);
+
+            return dp[i][buy]= max(take,not_take);
+
+
+        }
+
+       
+
+       
+      
+
+    }
+
+
+
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+
+        vector<vector<long>>dp(n+1,vector<long>(2,-1));
+
+
+        // buy-1 means u can buy
+        // buy-0 means u can't buy
+         int buy=1;  // initially u have to buy
+
+        int ans=f(0,buy,prices,dp);
+
+        return ans;
+
+
+    }
+};
