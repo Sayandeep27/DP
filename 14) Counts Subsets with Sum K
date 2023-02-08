@@ -79,3 +79,70 @@ int findWays(vector<int> &num, int k)
     return dp[n-1][k];
     
 }
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        
+        int n=nums.size();
+        int sum=0;
+
+        for(int i=0;i<n;i++) sum+=nums[i];
+
+        if(sum%2!=0) return false;
+
+
+       sum=sum/2;
+       
+       vector<vector<bool>>dp(n+1,vector<bool>(sum+1,false));
+
+       for(int i=0;i<dp.size();i++)
+       {
+           for(int target=0;target<dp[0].size();target++)
+           {
+               if(i==0 and target==0)
+               {
+                   dp[i][target]=true;
+               }
+               else if(target==0)
+               {
+                   dp[i][target]=true;
+               }
+               else if(i==0)
+               {
+                   dp[i][target]=false;
+               }
+               else
+               {
+
+                   // not take
+
+                   bool not_take=dp[i-1][target];
+
+
+
+                   // take
+
+                   bool take=false;
+                   
+                   if(nums[i-1]<=target)
+                   {
+                      take=dp[i-1][target-nums[i-1]];
+                   }
+
+
+                     dp[i][target]=(take or not_take);
+
+
+               }
+           }
+       }
+      
+       return dp[n][sum];
+
+    }
+};
