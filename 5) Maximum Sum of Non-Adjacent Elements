@@ -37,33 +37,28 @@ Space Complexity: O(N)
 
 Tabulation approach--------------------
 
-
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int solveUtil(int n, vector<int>& arr, vector<int>& dp){
-    
-    dp[0]= arr[0];
-    
-    for(int i=1 ;i<n; i++){
-        int pick = arr[i];
-        if(i>1)
-            pick += dp[i-2];
-        int nonPick = 0+ dp[i-1];
+ int FindMaxSum(int arr[], int n)
+    {
+        // Your code here
+       
+        vector<int>dp(n+1,-1);
         
-        dp[i]= max(pick, nonPick);
+        dp[0]=arr[0];
+        
+        for(int i=1;i<n;i++)
+        {
+            int pick=dp[i-2]+arr[i];
+            
+            int notpick=dp[i-1]+0;
+            
+            dp[i]=max(pick,notpick);
+        }
+       
+       
+       return dp[n-1];
+       
+       
     }
-    
-    
-    return dp[n-1];
-}
-
-int solve(int n, vector<int>& arr){
-    vector<int> dp(n,-1);
-    return solveUtil(n, arr, dp);
-}
-
 
 int main() {
 
