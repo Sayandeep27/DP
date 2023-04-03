@@ -1,6 +1,8 @@
-
-int f(int i,int j,string &str1,string &str2,vector<vector<int>>&dp)
-{
+class Solution {
+public:
+   
+   int f(int i,int j,string &str1,string &str2,vector<vector<int>>&dp)
+   {
     // base cases
     
     if(i<0) return j+1;
@@ -15,20 +17,28 @@ int f(int i,int j,string &str1,string &str2,vector<vector<int>>&dp)
         return dp[i][j]= 0+f(i-1,j-1,str1,str2,dp);
     }
     
-    return dp[i][j]= 1+min(f(i-1,j-1,str1,str2,dp),min(f(i-1,j,str1,str2,dp),f(i,j-1,str1,str2,dp)));
-    
-}
+   
+      int op1=f(i-1,j-1,str1,str2,dp);
+      int op2=f(i-1,j,str1,str2,dp);
+      int op3=f(i,j-1,str1,str2,dp);
 
-int editDistance(string str1, string str2)
-{
-    //write you code here
-    
-    int n=str1.size();
-    int m=str2.size();
-    
-    vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-    
-    int ans=f(n-1,m-1,str1,str2,dp);
-    
-    return ans;
-}
+
+      return dp[i][j]=1+min(op1,min(op2,op3));  
+   
+   
+   }
+
+
+    int minDistance(string s1, string s2) {
+        
+       int n=s1.size();
+       int m=s2.size();
+
+       vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+
+       int ans=f(n-1,m-1,s1,s2,dp);
+
+       return ans;
+
+    }
+};
