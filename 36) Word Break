@@ -1,0 +1,49 @@
+class Solution {
+public:
+    
+    bool f(int i,string &s,set<string>&st,vector<int>&dp)
+    {
+
+          if(i==s.size()) return true;
+
+          if(dp[i]!=-1) return dp[i];
+        
+          string temp="";
+
+          for(int j=i;j<s.size();j++)
+          {
+              temp+=s[j];
+
+              if(st.find(temp)!=st.end())   // means the word is present in the set
+              {
+                if(f(j+1,s,st,dp)) return dp[j]=true;
+              }  
+          }
+
+
+       return dp[i]=false;
+
+    }
+
+
+
+    bool wordBreak(string s, vector<string>& dict) {
+
+        int n=s.size(); 
+        vector<int>dp(n+1,-1);
+
+
+        set<string>st;
+
+        for(auto it:dict)
+        {
+            st.insert(it);
+        }
+       
+        int i=0; // starting index
+
+      return f(i,s,st,dp);
+      
+
+    }
+};
