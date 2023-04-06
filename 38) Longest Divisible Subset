@@ -1,0 +1,55 @@
+class Solution {
+public:
+
+    vector<int>ans;
+
+    void f(vector<int>&temp,int i,int prev,vector<int>&nums,vector<int>&dp)
+    { 
+        int n=nums.size();
+        
+        // base case
+        
+        if(i>=n)
+        {
+            if(temp.size()>ans.size())
+            {
+                ans=temp;
+            }
+
+            return;
+        }
+
+
+        if(nums[i]%prev==0 and (int)temp.size()>dp[i])
+        {
+           
+            dp[i]=temp.size();
+            temp.push_back(nums[i]);
+
+            f(temp,i+1,nums[i],nums,dp);
+
+            temp.pop_back();
+        }
+
+        f(temp,i+1,prev,nums,dp);
+
+
+    }
+
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+
+            int n=nums.size();
+
+            sort(nums.begin(),nums.end());
+
+            vector<int>dp(n+1,-1);
+
+            vector<int>temp;
+
+            f(temp,0,1,nums,dp);
+
+            return ans;
+
+
+    }
+};
