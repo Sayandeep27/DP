@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+   int solve(int i,vector<int>&arr,int n,int k,vector<int>&dp)
+   {
+       // base case
+        if(i==n) return 0;
+
+        if(dp[i]!=-1) return dp[i];
+        
+       int maxi=-1;
+       int len=0;
+       int ans=-1;
+
+       for(int j=i;j<min(n,i+k);j++)
+       {
+            len++;
+            maxi=max(maxi,arr[j]);
+
+            int temp=(len*maxi)+solve(j+1,arr,n,k,dp);
+ 
+             ans=max(ans,temp);
+
+       } 
+     
+     return dp[i]=ans;
+
+   }
+  
+
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+         
+       int n=arr.size();
+
+       int i=0;
+
+       vector<int>dp(n,-1);
+
+       return solve(i,arr,n,k,dp);
+
+    }
+};
