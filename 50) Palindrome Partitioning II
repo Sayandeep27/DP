@@ -1,0 +1,54 @@
+class Solution {
+public:
+
+   bool is_palindrome(int i,int j,string &s)
+   {
+       while(i<j)
+       {
+           if(s[i]!=s[j]) return false;
+           i++;
+           j--;
+       }
+
+       return true;
+   }
+
+    int solve(int i,string &s,vector<int>&dp)
+    {
+        int n=s.size();
+       
+        // base case
+        if(i==n) return 0;
+
+        if(dp[i]!=-1) return dp[i];
+       
+        int mini=INT_MAX;
+
+        for(int j=i;j<n;j++)
+        {
+            if(is_palindrome(i,j,s))
+            {
+                int ans=1+solve(j+1,s,dp);
+
+                mini=min(mini,ans);
+            }
+        }
+
+
+        return dp[i]= mini;
+
+
+    }  
+
+    int minCut(string s) {
+        
+      int n=s.size();
+
+      int i=0;
+
+      vector<int>dp(n,-1);
+
+      return solve(i,s,dp)-1;
+         
+    }
+};
