@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+
+        vector<string>ans;
+
+        set<string>st;
+
+        for(auto it:words)
+        {
+            st.insert(it);
+        }       
+        
+        for(auto it:words)
+        {
+            int n=it.size();
+
+            vector<int>dp(n+1,-1);
+
+            dp[0]=1;
+
+            for(int i=0;i<n;i++)
+            {
+                if(dp[i]==-1) continue;
+
+                for(int j=i+1;j<=n;j++)
+                {
+                    if(j-i<n and st.find(it.substr(i,j-i))!=st.end())
+                    {
+                        dp[j]=1;
+                    }
+
+                }
+                
+            }
+
+
+            if(dp[n]==1) ans.push_back(it);
+        }
+ 
+
+      return ans;
+
+    }
+};
