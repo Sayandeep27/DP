@@ -1,79 +1,24 @@
-Part – 1: Memoizaton-----------------
-
-
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int f(int n, vector<int>& dp){
-    if(n<=1) return n;
+class Solution {
+  public:
     
-    if(dp[n]!= -1) return dp[n];
-    return dp[n]= f(n-1,dp) + f(n-2,dp);
-}
-
-
-int main() {
-
-  int n=5;
-  vector<int> dp(n+1,-1);
-  cout<<f(n,dp);
-  return 0;
-}
-
-
-
-
-
-
-Time Complexity: O(N)
-
-Reason: The overlapping subproblems will return the answer in constant time O(1). Therefore the total number of new subproblems we solve is ‘n’. Hence total time complexity is O(N).
-
-Space Complexity: O(N)
-
-Reason: We are using a recursion stack space(O(N)) and an array (again O(N)). Therefore total space complexity will be O(N) + O(N) ≈ O(N)
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Part -2: Tabulation-------------
-
-#include <bits/stdc++.h>
-
-using namespace std;
-
-
-int main() {
-
-  int n=5;
-  vector<int> dp(n+1,-1);
+    const int mod=1000000007;
+    
+    int f(int i,vector<int>&dp)
+    {
+        // base case
+        if(i==0) return 0;
+        if(i==1) return 1;
+        
+        if(dp[i]!=-1) return dp[i];
+        
+        return dp[i]=(f(i-1,dp)+f(i-2,dp))%mod;
+    }
   
-  dp[0]= 0;
-  dp[1]= 1;
-  
-  for(int i=2; i<=n; i++){
-      dp[i] = dp[i-1]+ dp[i-2];
-  }
-  cout<<dp[n];
-  return 0;
-}
-
-
-
-
-Time Complexity: O(N)
-
-Reason: We are running a simple iterative loop
-
-Space Complexity: O(N)
-
-Reason: We are using an external array of size ‘n+1’.
-
-
-
-
-
-
-
-
-
+    int nthFibonacci(int n){
+       
+       
+       vector<int>dp(n+1,-1);
+       return f(n,dp);
+       
+    }
+};
