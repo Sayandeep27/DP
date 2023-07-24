@@ -1,33 +1,27 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
-int solveUtil(int ind, vector<int>& arr, vector<int>& dp){
+class Solution {
+  public:
     
-    if(dp[ind]!=-1) return dp[ind];
+    const int mod=1000000007;
     
-    if(ind==0) return arr[ind];
-    if(ind<0)  return 0;
-    
-    int pick= arr[ind]+ solveUtil(ind-2, arr,dp);
-    int nonPick = 0 + solveUtil(ind-1, arr, dp);
-    
-    return dp[ind]=max(pick, nonPick);
-}
-
-int solve(int n, vector<int>& arr){
-    vector<int> dp(n,-1);
-    return solveUtil(n-1, arr, dp);
-}
-
-
-int main() {
-
-  vector<int> arr{2,1,4,9};
-  int n=arr.size();
-  cout<<solve(n,arr);
-
-}
+    int f(int i,vector<int>&dp)
+    {
+        // base case
+        if(i==0) return 0;
+        if(i==1) return 1;
+        
+        if(dp[i]!=-1) return dp[i];
+        
+        return dp[i]=(f(i-1,dp)+f(i-2,dp))%mod;
+    }
+  
+    int nthFibonacci(int n){
+       
+       
+       vector<int>dp(n+1,-1);
+       return f(n,dp);
+       
+    }
+};
 
 
 Time Complexity: O(N)
