@@ -1,48 +1,52 @@
-
-int longestIncreasingSubsequence(int arr[], int n){
-    
-    vector<int> dp(n,1);
-    vector<int> hash(n,1);
-    
-    for(int i=0; i<=n-1; i++){
+vector<int> longestIncreasingSubsequence(int n, vector<int>& arr) {
         
-        hash[i] = i; // initializing with current index
-        for(int prev_index = 0; prev_index <=i-1; prev_index ++){
+        vector<int>ans;
+        
+        
+        vector<int>dp(n,1);
+        vector<int>parent(n);
+        
+        for(int i=0;i<n;i++)
+        {
+            parent[i]=i;
             
-            if(arr[prev_index]<arr[i] && 1 + dp[prev_index] > dp[i]){
-                dp[i] = 1 + dp[prev_index];
-                hash[i] = prev_index;
+            for(int prev=0;prev<i;prev++)
+            {
+                if(arr[i]>arr[prev] and 1+dp[prev]>dp[i])
+                {
+                    dp[i]=1+dp[prev];
+                    
+                    parent[i]=prev;
+                }
             }
         }
-    }
-    
-    int ans = -1;
-    int lastIndex =-1;
-    
-    for(int i=0; i<=n-1; i++){
-        if(dp[i]> ans){
-            ans = dp[i];
-            lastIndex = i;
+        
+        
+        
+        int maxi=-1,lastindex=-1;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(dp[i]>maxi)
+            {
+                maxi=dp[i];
+                lastindex=i;
+            }
         }
+        
+        
+        ans.push_back(arr[lastindex]);
+        
+        while(parent[lastindex]!=lastindex)
+        {
+            lastindex=parent[lastindex];
+            ans.push_back(arr[lastindex]);
+        }
+        
+        
+         reverse(ans.begin(),ans.end());
+        
+        return ans;
+        
+        
     }
-    
-    vector<int> temp;
-    temp.push_back(arr[lastIndex]);
-    
-    while(hash[lastIndex] != lastIndex){ // till not reach the initialization value
-        lastIndex = hash[lastIndex];
-        temp.push_back(arr[lastIndex]);    
-    }
-    
-   
-    reverse(temp.begin(),temp.end());
-    
-    cout<<"The subsequence elements are ";
-    
-    for(int i=0; i<temp.size(); i++){
-        cout<<temp[i]<<" ";
-    }
-    cout<<endl;
-    
-    return ans;
-}
